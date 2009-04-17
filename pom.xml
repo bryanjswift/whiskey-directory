@@ -1,18 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.bryanjswift</groupId>
-	<artifactId>twitter-favorites</artifactId>
+	<groupId>com.nywhiskeydirectory</groupId>
+	<artifactId>whiskey-directory</artifactId>
 	<packaging>war</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>Twitter Favorites</name>
-	<url>http://bryanjswift.com</url>
-	<description>Application to take favorited tweets and save the URLs in them to another service</description>
+	<name>NY Whiskey Directory</name>
+	<url>http://nywhiskeydirectory.com</url>
+	<description>Application to share brown liquor found around New York City.</description>
 <!-- Properties -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 <!-- Dependencies -->
 	<dependencies>
+	<!-- Clojure -->
+		<dependency>
+			<groupId>org.clojure</groupId>
+			<artifactId>clojure-lang</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	<!-- Scala -->
 		<dependency>
 			<groupId>org.scala-lang</groupId>
@@ -29,6 +35,12 @@
 	</dependencies>
 <!-- Build Plugins -->
 	<build>
+	<!-- Resources -->
+		<resources>
+			<resource>
+				<directory>src/main/clojure</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -76,6 +88,17 @@
 			</releases>
 			<snapshots>
 				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>tapestry</id>
+			<name>Formos Tapestry</name>
+			<url>http://tapestry.formos.com/maven-snapshot-repository</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 	</repositories>
