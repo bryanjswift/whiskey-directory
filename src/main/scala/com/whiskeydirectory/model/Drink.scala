@@ -8,7 +8,8 @@ class Drink(val name:String, val tags:Map[String,Int], val location:Option[Locat
 		val ntags = if (tags contains tag) tags ++ Map(tag -> (tags(tag) + 1)) else tags ++ Map(tag -> 1)
 		Drink(name, ntags, location)
 	}
-
+	def apply(tag:String) = this add tag
+	def apply(location:Location) = this change location
 	def change(location:Location) = Drink(name, tags, Some(location))
 }
 
