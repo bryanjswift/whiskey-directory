@@ -9,7 +9,7 @@ case class CrossStreet(val streets:List[Street]) {
 	require(streets.filter(street => street.latitudinal).length >= 1)
 }
 
-case class Address(val number:String, val street:Street, val description:String) {
+case class Address(val number:String, val street:Street, val description:Option[String]) {
 	require(number != null && number != "")
 	require(street != null)
 }
