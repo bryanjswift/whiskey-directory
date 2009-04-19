@@ -47,4 +47,31 @@ object LocationSpecs extends Specification {
 		new CrossStreet(List(new NorthSouthStreet("test 1"), new EastWestStreet("test 2")))
 		new CrossStreet(List(new NorthSouthStreet("test 1"), new EastWestStreet("test 2"), new NorthSouthStreet("test 3")))
 	}
+	"Address may not have a null number" in {
+		try {
+			new Address(null, new EastWestStreet("test 1"), None)
+			false
+		} catch {
+			case iae:IllegalArgumentException =>
+				true // expected
+		}
+	}
+	"Address may not have an empty number" in {
+		try {
+			new Address("", new EastWestStreet("test 1"), None)
+			false
+		} catch {
+			case iae:IllegalArgumentException =>
+				true // expected
+		}
+	}
+	"Address may not have a null street" in {
+		try {
+			new Address("test 1", null, None)
+			false
+		} catch {
+			case iae:IllegalArgumentException =>
+				true // expected
+		}
+	}
 }
