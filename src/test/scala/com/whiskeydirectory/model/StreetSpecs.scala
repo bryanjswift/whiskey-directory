@@ -8,7 +8,7 @@ class StreetTest extends JUnit4(StreetSpecs)
 object StreetSpecs extends Specification {
 	"null Street name should throw exception" in {
 		try {
-			val street = new Street(null, true, false)
+			val street = new NorthSouthStreet(null)
 			false // exception should be thrown
 		} catch {
 			case iae:IllegalArgumentException =>
@@ -17,25 +17,7 @@ object StreetSpecs extends Specification {
 	}
 	"empty Street name should throw exception" in {
 		try {
-			val street = new Street("", true, false)
-			false // exception should be thrown
-		} catch {
-			case iae:IllegalArgumentException =>
-				true // expected
-		}
-	}
-	"either longitudinal and latitudinal must be true" in {
-		try {
-			val street = new Street("Houston", false, false)
-			false // exception should be thrown
-		} catch {
-			case iae:IllegalArgumentException =>
-				true // expected
-		}
-	}
-	"either longitudinal and latitudinal must be false" in {
-		try {
-			val street = new Street("Houston", true, true)
+			val street = new EastWestStreet("")
 			false // exception should be thrown
 		} catch {
 			case iae:IllegalArgumentException =>
