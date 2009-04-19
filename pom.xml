@@ -91,7 +91,7 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>tapestry</id>
+			<id>tapestry-snapshots</id>
 			<name>Formos Tapestry</name>
 			<url>http://tapestry.formos.com/maven-snapshot-repository</url>
 			<releases>
