@@ -1,0 +1,52 @@
+h1. Whiskey Directory
+
+The goal of this application is to create a way for people in a city to add and talk about drinks they've had in the city.
+
+h2. Testing
+
+h3. Specs
+
+BDD Specs are written with the help of the "specs library":specs available on Google Code. The specs are executed as "JUnit":junit tests during Maven's test phase. This means the Maven build outputs information about tests run, passed and failed rather than information about what how the specs are defined. To see the specs executed as JUnit tests execute the `mvn clean test` command from the command prompt.
+
+[specs]http://code.google.com/p/specs/
+[junit]http://www.junit.org
+
+In order to run the specs _as specs_ first execute `mvn package` which will build the war file and a directory with the war contents. Once the package is built run a command similar to:
+
+<pre><code>
+	scala -cp target/whiskey-directory/WEB-INF/lib/*:target/classes/:target/test-classes/:$M2_REPOSITORY/org/specs/specs/1.4.3/specs-1.4.3.jar {SpecificationObject}
+	
+</code></pre>
+
+In the above command {SpecificationObject} is the full path of any object which extends org.specs.Specification, and $M2_REPOSITORY is an environment variable set to the root of the local Maven repository. On OSX $M2_REPOSITORY will probably be @~/.m2/repository@ but the tilde must be replaced with @/Users/username@.
+
+With the above guidelines a full command may look like:
+
+<pre><code>
+	scala -cp target/whiskey-directory/WEB-INF/lib/*:target/classes/:target/test-classes/:$M2_REPOSITORY/org/specs/specs/1.4.3/specs-1.4.3.jar com.whiskeydirectory.model.DrinkSpecs
+	
+</code></pre>
+
+h2. Building
+
+h3. AppEngine jars
+
+In order to build an "Java AppEngine":ae project with "Maven":m (2.0.10) first the jars from the SDK need to be installed in the local repository. To do this first navigate to where the "Java AppEngine SDK":javasdk are located and then run the following four commands.
+
+[ae]http://code.google.com/appengine/docs/java/overview.html
+[m]http://maven.apache.org/
+[javasdk]http://code.google.com/appengine/downloads.html#Google_App_Engine_SDK_for_Java
+
+<pre><code>
+	mvn install:install-file -Dfile=lib/user/orm/datanucleus-appengine-1.0.0.final.jar -DgroupId=org.datanucleus -DartifactId=datanucleus-appengine -Dversion=1.0.0.final -Dpackaging=jar -DgeneratePom=true
+	mvn install:install-file -Dfile=lib/user/appengine-api-1.0-sdk-1.2.0.jar -DgroupId=com.google -DartifactId=appengine-api-1.0-sdk -Dversion=1.2.0 -Dpackaging=jar -DgeneratePom=true
+	mvn install:install-file -Dfile=lib/shared/appengine-local-runtime-shared.jar -DgroupId=com.google -DartifactId=appengine-local-runtime-shared -Dversion=1.2.0 -Dpackaging=jar -DgeneratePom=true
+	mvn install:install-file -Dfile=lib/appengine-tools-api.jar -DgroupId=com.google -DartifactId=appengine-tools -Dversion=1.2.0 -Dpackaging=jar -DgeneratePom=true
+	
+</code></pre>
+
+h3. Scala jars
+
+The "Scala":s jars, including the specs library, should be located by Maven in the declared repositories in the pom.xml.
+
+[s]http://www.scala-lang.org
