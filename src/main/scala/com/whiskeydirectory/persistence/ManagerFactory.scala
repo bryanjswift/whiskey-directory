@@ -6,6 +6,6 @@ import javax.jdo.PersistenceManagerFactory
 
 object ManagerFactory {
 	private val instance = JDOHelper.getPersistenceManagerFactory("transactions-optional")
-	def apply = instance
-	def manager = instance.getPersistenceManager()
+	def apply():PersistenceManagerFactory = instance
+	def manager():PersistenceManager = instance.getPersistenceManager()
 }
