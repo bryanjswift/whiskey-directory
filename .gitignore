@@ -1,6 +1,7 @@
 .classpath
 .project
 .settings
-.manage
+.manager
 tags
 target
+war
