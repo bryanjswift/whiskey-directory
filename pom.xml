@@ -74,6 +74,7 @@
 	</dependencies>
 <!-- Build Plugins -->
 	<build>
+		<finalName>${project.artifactId}</finalName>
 	<!-- Resources -->
 		<resources>
 			<resource>
