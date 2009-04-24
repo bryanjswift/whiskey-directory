@@ -5,6 +5,6 @@ import javax.servlet.http.{HttpServlet, HttpServletRequest => Request, HttpServl
 class Index extends HttpServlet {
 	override def doGet(request:Request, response:Response) {
 		response.setContentType("text/plain")
-		response.getWriter.println("Hello, world")
+		response.getWriter.println("Hello, Scala world")
 	}
 }
