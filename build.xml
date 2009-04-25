@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<!-- Defines:
+		* sdk.dir - location of the appengine sdk
+		* scala.compile.jar - location of the Scala compile jar
+		* scala.library.jar - location of the Scala library jar
+		* scala.src - top level Scala source directory (.scala files)
+		* scala.test - top level Scala test source directory (.scala files)
+		* java.src - top level Java source directory (.java files)
+		* java.test - top level Java test source directory (.java files)
+		* resources.src - top level resource directory (get copied into build.dir)
+		* webapp.src - top level webapp directory (files get copied into war.dir)
+		* test.dir - where to compile test source to (.class files)
+		* war.dir - top level packaging directory
+		* build.dir - compile source files to here (.class files)
+		* lib.dir - copy library files to here (.jar files)
+	-->
+	<property file="ant.properties" />
+
+	<!-- Defines targets:
+		* enhance_war
+		* dev_appserver
+		* appcfg
+	-->
+	<import file="${sdk.dir}/config/user/ant-macros.xml" />
+
+	<path id="scala.classpath">
+		<pathelement location="${scala.compile.jar}" />
+		<pathelement location="${scala.library.jar}" />
+	</path>
+
+	<taskdef resource="scala/tools/ant/antlib.xml">
+		<classpath refid="scala.classpath" />
+	</taskdef>
+	<taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask" />
+
+	<path id="project.classpath">
+		<path refid="scala.classpath" />
+		<pathelement path="${build.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${sdk.dir}/lib">
+			<include name="shared/**/*.jar" />
+		</fileset>
+	</path>
+
+	<path id="test.classpath">
+		<path refid="project.classpath" />
+		<filelist files="${test.jars}" />
+		<pathelement path="${test.dir}" />
+	</path>
+
+	<target name="clean" description="Remove the war directory">
+		<delete dir="${war.dir}" />
+	</target>
+
+	<target name="init" depends="clean" description="Create the directory needed for compiling">
+		<tstamp />
+		<mkdir dir="${war.dir}" />
+		<copy todir="${war.dir}">
+			<fileset dir="${webapp.src}" />
+		</copy>
+	</target>
+
+	<target name="copyjars" depends="init" description="Copy AppEngine jars into the war.">
+		<copy todir="${lib.dir}" flatten="true">
+			<fileset dir="${sdk.dir}/lib/user">
+				<include name="**/*.jar" />
+			</fileset>
+			<filelist files="${scala.library.jar}" />
+		</copy>
+	</target>
+
+	<target name="compile" depends="copyjars" description="Compiles Java and Scala source and copies other source files to the war">
+		<mkdir dir="${build.dir}" />
+		<copy todir="${build.dir}">
+			<fileset dir="${resources.src}" />
+		</copy>
+		<javac srcdir="${java.src}" destdir="${build.dir}" classpathref="project.classpath" debug="on" />
+		<fsc srcdir="${scala.src}" destdir="${build.dir}" classpathref="project.classpath" force="changed" />
+	</target>
+	<target name="test-compile" depends="compile" description="Compiles Java and Scala tests">
+		<mkdir dir="${test.dir}" />
+		<javac srcdir="${java.test}" destdir="${test.dir}" classpathref="test.classpath" debug="on" />
+		<fsc srcdir="${scala.test}" destdir="${test.dir}" classpathref="test.classpath" force="changed" />
+	</target>
+
+	<target name="test" depends="test-compile" description="Execute tests">
+		<junit haltonfailure="true" showoutput="true">
+			<classpath refid="test.classpath" />
+			<formatter type="brief" usefile="false" />
+			<batchtest fork="yes">
+				<fileset dir="${test.dir}">
+					<include name="**/*Test.class" />
+					<exclude name="**/All*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<delete dir="${test.dir}" />
+	</target>
+
+	<target name="package" depends="test" description="Performs JDO enhancement on compiled data classes.">
+		<enhance_war war="${war.dir}" />
+	</target>
+
+	<target name="dev" depends="package" description="Starts the development server.">
+		<dev_appserver war="${war.dir}" />
+	</target>
+
+	<target name="push" depends="package" description="Uploads the application to AppEngine.">
+		<appcfg action="update" war="${war.dir}" />
+	</target>
+</project>
