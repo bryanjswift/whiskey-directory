@@ -10,8 +10,9 @@
 		* java.test - top level Java test source directory (.java files)
 		* resources.src - top level resource directory (get copied into build.dir)
 		* webapp.src - top level webapp directory (files get copied into war.dir)
-		* test.dir - where to compile test source to (.class files)
 		* war.dir - top level packaging directory
+		* test.jars - JUnit and Specs jars
+		* test.dir - where to compile test source to (.class files)
 		* build.dir - compile source files to here (.class files)
 		* lib.dir - copy library files to here (.jar files)
 	-->
@@ -29,9 +30,11 @@
 		<pathelement location="${scala.library.jar}" />
 	</path>
 
+	<!-- antlib.xml is found inside scala.library.jar -->
 	<taskdef resource="scala/tools/ant/antlib.xml">
 		<classpath refid="scala.classpath" />
 	</taskdef>
+	<!-- JUnitTask is included in the test.jars -->
 	<taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask" />
 
 	<path id="project.classpath">
