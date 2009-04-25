@@ -108,7 +108,7 @@
 		<delete dir="${test.dir}" />
 	</target>
 
-	<target name="dev" depends="package" description="Starts the development server.">
+	<target name="dev" description="Starts the development server.">
 		<dev_appserver war="${war.dir}" />
 	</target>
 
