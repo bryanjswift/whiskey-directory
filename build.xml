@@ -58,7 +58,7 @@
 		<delete dir="${war.dir}" />
 	</target>
 
-	<target name="init" depends="clean" description="Create the directory needed for compiling">
+	<target name="init" description="Create the directory needed for compiling">
 		<tstamp />
 		<mkdir dir="${war.dir}" />
 		<copy todir="${war.dir}">
@@ -83,10 +83,15 @@
 		<javac srcdir="${java.src}" destdir="${build.dir}" classpathref="project.classpath" debug="on" />
 		<fsc srcdir="${scala.src}" destdir="${build.dir}" classpathref="project.classpath" force="changed" />
 	</target>
+
 	<target name="test-compile" depends="compile" description="Compiles Java and Scala tests">
 		<mkdir dir="${test.dir}" />
 		<javac srcdir="${java.test}" destdir="${test.dir}" classpathref="test.classpath" debug="on" />
 		<fsc srcdir="${scala.test}" destdir="${test.dir}" classpathref="test.classpath" force="changed" />
+	</target>
+
+	<target name="package" depends="compile" description="Performs JDO enhancement on compiled data classes.">
+		<enhance_war war="${war.dir}" />
 	</target>
 
 	<target name="test" depends="test-compile" description="Execute tests">
@@ -103,15 +108,11 @@
 		<delete dir="${test.dir}" />
 	</target>
 
-	<target name="package" depends="test" description="Performs JDO enhancement on compiled data classes.">
-		<enhance_war war="${war.dir}" />
-	</target>
-
 	<target name="dev" depends="package" description="Starts the development server.">
 		<dev_appserver war="${war.dir}" />
 	</target>
 
-	<target name="push" depends="package" description="Uploads the application to AppEngine.">
+	<target name="update" depends="clean,package,test" description="Uploads the application to AppEngine.">
 		<appcfg action="update" war="${war.dir}" />
 	</target>
 </project>
