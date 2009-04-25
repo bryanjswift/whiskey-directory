@@ -15,19 +15,6 @@ abstract class Street(val name:String) extends Savable {
 		street.longitudinal = longitudinal
 		street
 	}
-
-	@PersistenceCapable { val identityType = IdentityType.APPLICATION }
-	class PersistableStreet extends Persistable {
-		@PrimaryKey
-		@Persistent { val valueStrategy = IdGeneratorStrategy.IDENTITY }
-		var id = 0
-		@Persistent
-		var name = ""
-		@Persistent
-		var longitudinal = false
-		@Persistent
-		var latitudinal = false
-	}
 }
 
 case class NorthSouthStreet(override val name:String) extends Street(name) {
@@ -38,4 +25,17 @@ case class NorthSouthStreet(override val name:String) extends Street(name) {
 case class EastWestStreet(override val name:String) extends Street(name) {
 	override val longitudinal = false
 	override val latitudinal = true
+}
+
+@PersistenceCapable { val identityType = IdentityType.APPLICATION }
+class PersistableStreet extends Persistable {
+	@PrimaryKey
+	@Persistent { val valueStrategy = IdGeneratorStrategy.IDENTITY }
+	var id = 0
+	@Persistent
+	var name = ""
+	@Persistent
+	var longitudinal = false
+	@Persistent
+	var latitudinal = false
 }

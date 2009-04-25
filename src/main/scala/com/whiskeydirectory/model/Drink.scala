@@ -3,11 +3,12 @@ package com.whiskeydirectory.model
 import com.whiskeydirectory.persistence.{Persistable,Savable}
 import javax.jdo.annotations._
 
-class Drink(val name:String, val tags:Option[List[String]], val establishment:Option[Establishment]) extends Savable {
+class Drink(val name:String, val tags:Option[List[String]], val establishment:Option[Establishment]) {
 	require(name != null && name.length > 0)
 	def this(name:String) = this(name, None, None)
 	def this(name:String, tags:List[String]) = this(name, Some(tags), None)
 
+/*
 	def getPersistable():Persistable = {
 		val drink = new PersistableDrink()
 		drink.name = name
@@ -34,6 +35,7 @@ class Drink(val name:String, val tags:Option[List[String]], val establishment:Op
 		@Persistent
 		var establishment:Establishment = null
 	}
+*/
 }
 
 object Drink {

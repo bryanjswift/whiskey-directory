@@ -1,11 +1,9 @@
 package com.whiskeydirectory.persistence
 
-import javax.jdo.JDOHelper
-import javax.jdo.PersistenceManager
-import javax.jdo.PersistenceManagerFactory
+import javax.jdo.{JDOHelper, PersistenceManager, PersistenceManagerFactory}
 
 object ManagerFactory {
-	private val instance = JDOHelper.getPersistenceManagerFactory("transactions-optional")
+	private val instance = JDOHelper.getPersistenceManagerFactory("transactional")
 	def apply():PersistenceManagerFactory = instance
 	def manager():PersistenceManager = instance.getPersistenceManager()
 }
