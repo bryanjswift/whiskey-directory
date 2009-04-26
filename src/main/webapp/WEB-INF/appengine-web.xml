@@ -5,8 +5,6 @@
 	<static-files />
 	<resource-files />
 	<system-properties />
-	<env-variables>
-		<env-var name="DEFAULT_ENCODING" value="UTF-8" />
-	</env-variables>
+	<env-variables />
 </appengine-web-app>
 
