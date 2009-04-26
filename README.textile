@@ -29,6 +29,12 @@ With the above guidelines a full command may look like:
 
 h2. Building - Ant
 
+h3. AppEngine jars
+
+In order to make the datanucleus class enhancing work the jars of version 1.1.0 in the AppEngine SDK needed to be replaced with the same jars of version 1.1.2 available in "datanucleus' Maven2 repository":dnmr. The jars are in {sdk.home}/lib/tools/orm/ and {sdk.home}/user/orm/. The only datanucleus jar which should not be replaced is datanucleus-appengine-1.0.0.final.jar.
+
+[dnmr]http://www.datanucleus.org/downloads/maven2/
+
 h3. ant.properties
 
 Ant's build.xml file looks for an ant.properties file at the same level as build.xml (project root) and expects the following properties to be defined:
