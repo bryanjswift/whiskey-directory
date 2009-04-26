@@ -27,6 +27,39 @@ With the above guidelines a full command may look like:
 	
 </code></pre>
 
+h2. Building - Ant
+
+h3. ant.properties
+
+Ant's build.xml file looks for an ant.properties file at the same level as build.xml (project root) and expects the following properties to be defined:
+
+* sdk.dir - location of the appengine sdk
+* scala.compile.jar - location of the Scala compile jar
+* scala.library.jar - location of the Scala library jar
+* scala.src - top level Scala source directory (.scala files)
+* scala.test - top level Scala test source directory (.scala files)
+* java.src - top level Java source directory (.java files)
+* java.test - top level Java test source directory (.java files)
+* resources.src - top level resource directory (get copied into build.dir)
+* webapp.src - top level webapp directory (files get copied into war.dir)
+* war.dir - top level packaging directory
+* test.jars - JUnit and Specs jars
+* test.dir - where to compile test source to (.class files)
+* build.dir - compile source files to here (.class files)
+* lib.dir - copy library files to here (.jar files)
+
+The build.xml defines several targets, what they do is outlined below:
+
+* clean _no dependencies_ - delete the directory specified by war.dir property
+* init _no dependencies_ - creates the directory specified by war.dir and copies all files in webapp.src into it
+* copyjars _depends on init_ - copies jar files in sdk.dir/lib/user and scala.library.jar into lib.dir
+* compile _depends on copyjars_ - compiles scala and java src into build.dir and copies resources.src into build.dir
+* test-compile _depends on compile_ - compiles java.test and scala.test into test.dir
+* package _depends on compile_ - runs the enhance_war task defined in sdk.dir/config/user/ant-macros.xml
+* test _depends on test-compile_ - executes tests compiled in test-compile using JUnit
+* dev _no dependencies_ - starts the dev_appserver jetty server
+* update _depends on clean, package and test_ - pushes war to app engine servers
+
 h2. Building - Maven
 
 h3. AppEngine jars
