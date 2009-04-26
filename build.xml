@@ -80,13 +80,13 @@
 		<copy todir="${build.dir}">
 			<fileset dir="${resources.src}" />
 		</copy>
-		<javac srcdir="${java.src}" destdir="${build.dir}" classpathref="project.classpath" debug="on" />
+		<javac srcdir="${java.src}" destdir="${build.dir}" classpathref="project.classpath" target="1.5" />
 		<fsc srcdir="${scala.src}" destdir="${build.dir}" classpathref="project.classpath" force="changed" />
 	</target>
 
 	<target name="test-compile" depends="compile" description="Compiles Java and Scala tests">
 		<mkdir dir="${test.dir}" />
-		<javac srcdir="${java.test}" destdir="${test.dir}" classpathref="test.classpath" debug="on" />
+		<javac srcdir="${java.test}" destdir="${test.dir}" classpathref="test.classpath" target="1.5" />
 		<fsc srcdir="${scala.test}" destdir="${test.dir}" classpathref="test.classpath" force="changed" />
 	</target>
 
