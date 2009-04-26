@@ -27,7 +27,7 @@ With the above guidelines a full command may look like:
 	
 </code></pre>
 
-h2. Building
+h2. Building - Maven
 
 h3. AppEngine jars
 
