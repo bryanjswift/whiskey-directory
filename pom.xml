@@ -47,23 +47,6 @@
 			<artifactId>datanucleus-appengine</artifactId>
 			<version>1.0.0.final</version>
 		</dependency>
-		<dependency>
-			<groupId>org.datanucleus</groupId>
-			<artifactId>datanucleus-core</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.datanucleus</groupId>
-			<artifactId>datanucleus-enhancer</artifactId>
-			<version>1.1.0</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>asm</groupId>
-			<artifactId>asm</artifactId>
-			<version>3.1</version>
-			<scope>compile</scope>
-		</dependency>
 	<!-- Scala -->
 		<dependency>
 			<groupId>org.scala-lang</groupId>
@@ -108,24 +91,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.datanucleus</groupId>
-				<artifactId>maven-datanucleus-plugin</artifactId>
-				<version>1.1.0</version>
-				<configuration>
-					<mappingIncludes>**/*.class</mappingIncludes>
-					<enhancerName>ASM</enhancerName>
-					<api>JDO</api>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>enhance</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 <!-- Plugin Repositories -->
@@ -134,16 +99,6 @@
 			<id>scala</id>
 			<name>Scala Tools</name>
 			<url>http://scala-tools.org/repo-releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>datanucleus</id>
-			<url>http://www.datanucleus.org/downloads/maven2</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -169,17 +124,6 @@
 			<id>tapestry-snapshots</id>
 			<name>Formos Tapestry</name>
 			<url>http://tapestry.formos.com/maven-snapshot-repository</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>datanucleus</id>
-			<name>datanucleus</name>
-			<url>http://www.datanucleus.org/downloads/maven2</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
