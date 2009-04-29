@@ -1,6 +1,6 @@
 package com.whiskeydirectory.web
 
-import com.whiskeydirectory.model.{Street, NorthSouthStreet, EastWestStreet}
+import com.whiskeydirectory.model.{Street, NorthSouthStreet, EastWestStreet, PersistableStreet}
 import com.whiskeydirectory.persistence.ManagerFactory
 import javax.jdo.PersistenceManager
 import javax.servlet.http.{HttpServlet, HttpServletRequest => Request, HttpServletResponse => Response}

@@ -1,10 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.whiskeydirectory.web.controller.Index" %>
+<%@ page import="com.whiskeydirectory.model.PersistableStreet" %>
+<%@ page import="java.util.List" %>
 <html>
 	<head>
 		<title>Save a street</title>
 	</head>
 	<body>
+		<% Index.streets(request); %>
 		<form action="/index" method="post">
 			<p>
 				<label for="streetname">Street</label>
