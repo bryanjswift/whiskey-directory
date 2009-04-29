@@ -112,7 +112,7 @@
 		<dev_appserver war="${war.dir}" />
 	</target>
 
-	<target name="update" depends="clean,package,test" description="Uploads the application to AppEngine.">
+	<target name="install" depends="clean,package,test" description="Uploads the application to AppEngine.">
 		<appcfg action="update" war="${war.dir}" />
 	</target>
 </project>
