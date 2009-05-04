@@ -1,7 +1,7 @@
 package com.whiskeydirectory.persistence
 
 trait Savable {
-	def getPersistable():Persistable
+	def insert():String
+	def values():List[String]
+	def binary(b:Boolean):String = if (b) "'1'" else "'0'"
 }
-
-trait Persistable { }

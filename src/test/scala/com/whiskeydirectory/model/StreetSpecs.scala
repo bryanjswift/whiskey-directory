@@ -6,6 +6,7 @@ import org.specs.runner.JUnit4
 class StreetTest extends JUnit4(StreetSpecs)
 
 object StreetSpecs extends Specification {
+	def have = addToSusVerb("have")
 	"null Street name should throw exception" in {
 		try {
 			val street = new NorthSouthStreet(null)
@@ -22,6 +23,12 @@ object StreetSpecs extends Specification {
 		} catch {
 			case iae:IllegalArgumentException =>
 				true // expected
+		}
+	}
+	"NorthSouthStreet('6th Ave')" should have {
+		val street = new NorthSouthStreet("6th Ave")
+		"values of List(NULL,'6th Ave','1','0')" in {
+			street.values == List("NULL","'6th Ave'","'1'","'0'")
 		}
 	}
 }
