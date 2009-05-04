@@ -1,5 +1,6 @@
 package com.whiskeydirectory.persistence
 
+// these methods could probably be implemented using reflection
 trait Savable {
 	def insert():String
 	def statement():String
