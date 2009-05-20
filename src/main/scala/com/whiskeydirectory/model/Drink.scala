@@ -1,6 +1,6 @@
 package com.whiskeydirectory.model
 
-import com.whiskeydirectory.persistence.{Persistable,Savable}
+import com.whiskeydirectory.persistence.Savable
 
 class Drink(val name:String, val tags:Option[List[String]], val establishment:Option[Establishment]) {
 	require(name != null && name.length > 0)
