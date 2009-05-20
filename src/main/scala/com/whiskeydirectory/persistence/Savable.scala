@@ -2,7 +2,7 @@ package com.whiskeydirectory.persistence
 
 // these methods could probably be implemented using reflection
 trait Savable {
-	var id:Int = _
+	var id:Long = _
 	def insert():String
 	def statement():String
 	def update():String
