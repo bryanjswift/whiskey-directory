@@ -8,7 +8,7 @@ object MysqlPersister extends Persister {
 		return
 	}
 	private def insert(obj:Savable):String =
-		"INSERT INTO " + obj.table + obj.fields.mkString(" (`","`, `","`) ") + "VALUES" + obj.values.mkString(" (",", ",");")
+		"INSERT INTO " + obj.table + obj.fields.mkString(" (`id`, `","`, `","`) ") + "VALUES" + obj.values.mkString(" (" + obj.id + ", ",", ",");")
 	private def update(obj:Savable):String =
-		"UPDATE " + obj.table + obj.fields.tail.mkString(" (`","`, `","`) ") + "VALUES" + obj.values.tail.mkString(" (",", ",")") + " WHERE id = " + obj.id + ";"
+		"UPDATE " + obj.table + obj.fields.mkString(" (`id`, `","`, `","`) ") + "VALUES" + obj.values.mkString(" (",", ",")") + " WHERE id = " + obj.id + ";"
 }
