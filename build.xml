@@ -8,12 +8,12 @@
 		* scala.test - top level Scala test source directory (.scala files)
 		* java.src - top level Java source directory (.java files)
 		* java.test - top level Java test source directory (.java files)
-		* resources.src - top level resource directory (get copied into build.dir)
+		* resources.src - top level resource directory (get copied into classes.dir)
 		* webapp.src - top level webapp directory (files get copied into war.dir)
 		* war.dir - top level packaging directory
 		* test.jars - JUnit and Specs jars
 		* test.dir - where to compile test source to (.class files)
-		* build.dir - compile source files to here (.class files)
+		* classes.dir - compile source files to here (.class files)
 		* lib.dir - copy library files to here (.jar files)
 	-->
 	<property file="ant.properties" />
@@ -39,7 +39,7 @@
 
 	<path id="project.classpath">
 		<path refid="scala.classpath" />
-		<pathelement path="${build.dir}" />
+		<pathelement path="${classes.dir}" />
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar" />
 		</fileset>
@@ -77,12 +77,12 @@
 	</target>
 
 	<target name="compile" depends="copyjars" description="Compiles Java and Scala source and copies other source files to the war">
-		<mkdir dir="${build.dir}" />
-		<copy todir="${build.dir}">
+		<mkdir dir="${classes.dir}" />
+		<copy todir="${classes.dir}">
 			<fileset dir="${resources.src}" />
 		</copy>
-		<javac srcdir="${java.src}" destdir="${build.dir}" classpathref="project.classpath" target="1.5" />
-		<fsc srcdir="${scala.src}" destdir="${build.dir}" classpathref="project.classpath" force="changed" />
+		<javac srcdir="${java.src}" destdir="${classes.dir}" classpathref="project.classpath" target="1.5" />
+		<fsc srcdir="${scala.src}" destdir="${classes.dir}" classpathref="project.classpath" force="changed" />
 	</target>
 
 	<target name="test-compile" depends="compile" description="Compiles Java and Scala tests">
