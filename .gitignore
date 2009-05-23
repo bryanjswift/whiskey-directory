@@ -2,7 +2,6 @@
 .project
 .settings
 .manager
-ant.properties
 tags
 target
 war
