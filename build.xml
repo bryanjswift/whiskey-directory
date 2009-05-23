@@ -102,7 +102,6 @@
 				</fileset>
 			</batchtest>
 		</junit>
-		<delete dir="${test.dir}" />
 	</target>
 
 	<target name="package" depends="test" description="Performs JDO enhancement on compiled data classes." />
