@@ -14,7 +14,7 @@ BDD Specs are written with the help of the "specs library":specs available on Go
 In order to run the specs _as specs_ first execute `mvn package` which will build the war file and a directory with the war contents. Once the package is built run a command similar to:
 
 <pre><code>
-	scala -cp target/whiskey-directory/WEB-INF/lib/*:target/classes/:target/test-classes/:$M2_REPOSITORY/org/scala-tools/testing/specs/1.5.0/specs-1.5.0.jar {SpecificationObject}
+	scala -cp target/whiskey-directory/WEB-INF/lib/*:target/whiskey-directory/WEB-INF/classes/:target/test-classes/:src/test/lib/* {SpecificationObject}
 	
 </code></pre>
 
@@ -23,7 +23,7 @@ In the above command {SpecificationObject} is the full path of any object which 
 With the above guidelines a full command may look like:
 
 <pre><code>
-	scala -cp target/whiskey-directory/WEB-INF/lib/*:target/classes/:target/test-classes/:$M2_REPOSITORY/org/scala-tools/testing/specs/1.5.0/specs-1.5.0.jar com.whiskeydirectory.model.DrinkSpecs
+	scala -cp target/whiskey-directory/WEB-INF/lib/*:target/whiskey-directory/WEB-INF/classes/:target/test-classes/:src/test/lib/* com.whiskeydirectory.model.DrinkSpecs
 	
 </code></pre>
 
