@@ -1,6 +1,6 @@
 package com.whiskeydirectory.model
 
-import com.whiskeydirectory.persistence.{Savable,Tabled}
+import com.whiskeydirectory.persistence.Savable
 
 sealed abstract class Street(val name:String) extends Savable {
 	require(name != null && name != "")
