@@ -36,6 +36,8 @@ Ant's build.xml file looks for an ant.properties file at the same level as build
 * sdk.dir - location of the appengine sdk
 * scala.compile.jar - location of the Scala compile jar [e.g. {scala.home}/lib/scala-compiler.jar]
 * scala.library.jar - location of the Scala library jar [e.g. {scala.home}/lib/scala-library.jar]
+* lib.src - library files for build and runtime (files get copied into build.lib.dir)
+* lib.test - library files for testing
 * scala.src - top level Scala source directory (.scala files)
 * scala.test - top level Scala test source directory (.scala files)
 * java.src - top level Java source directory (.java files)
@@ -43,10 +45,7 @@ Ant's build.xml file looks for an ant.properties file at the same level as build
 * resources.src - top level classpath resource directory (get copied into classes.dir)
 * webapp.src - top level webapp directory (files get copied into war.dir)
 * war.dir - top level packaging directory
-* test.jars - JUnit and Specs jars
 * test.dir - where to compile test source to (.class files)
-* classes.dir - compile source files to here (.class files) [e.g. {war.dir}/WEB-INF/classes]
-* lib.dir - copy library files to here (.jar files) [e.g. {war.dir}/WEB-INF/lib]
 
 The build.xml defines several targets, what they do is outlined below:
 

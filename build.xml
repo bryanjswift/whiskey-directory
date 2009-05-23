@@ -4,19 +4,20 @@
 		* sdk.dir - location of the appengine sdk
 		* scala.compile.jar - location of the Scala compile jar
 		* scala.library.jar - location of the Scala library jar
+		* lib.src - library files for build and runtime (files get copied into build.lib.dir)
+		* lib.test - library files for testing
 		* scala.src - top level Scala source directory (.scala files)
 		* scala.test - top level Scala test source directory (.scala files)
 		* java.src - top level Java source directory (.java files)
 		* java.test - top level Java test source directory (.java files)
-		* resources.src - top level resource directory (get copied into classes.dir)
+		* resources.src - top level resource directory (get copied into build.classes.dir)
 		* webapp.src - top level webapp directory (files get copied into war.dir)
 		* war.dir - top level packaging directory
-		* test.jars - JUnit and Specs jars
 		* test.dir - where to compile test source to (.class files)
-		* classes.dir - compile source files to here (.class files)
-		* lib.dir - copy library files to here (.jar files)
 	-->
 	<property file="ant.properties" />
+	<property name="build.classes.dir" location="${war.dir}/WEB-INF/classes" />
+	<property name="build.lib.dir" location="${war.dir}/WEB-INF/lib" />
 
 	<!-- Defines targets:
 		* enhance_war
@@ -39,8 +40,8 @@
 
 	<path id="project.classpath">
 		<path refid="scala.classpath" />
-		<pathelement path="${classes.dir}" />
-		<fileset dir="${lib.dir}">
+		<pathelement path="${build.classes.dir}" />
+		<fileset dir="${build.lib.dir}">
 			<include name="**/*.jar" />
 		</fileset>
 		<fileset dir="${sdk.dir}/lib">
@@ -50,7 +51,9 @@
 
 	<path id="test.classpath">
 		<path refid="project.classpath" />
-		<filelist files="${test.jars}" />
+		<fileset dir="${lib.test}">
+			<include name="**/*.jar" />
+		</fileset>
 		<pathelement path="${test.dir}" />
 	</path>
 
@@ -68,8 +71,11 @@
 	</target>
 
 	<target name="copyjars" depends="init" description="Copy AppEngine jars into the war.">
-		<copy todir="${lib.dir}" flatten="true">
+		<copy todir="${build.lib.dir}" flatten="true">
 			<fileset dir="${sdk.dir}/lib/user">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${lib.src}">
 				<include name="**/*.jar" />
 			</fileset>
 			<filelist files="${scala.library.jar}" />
@@ -77,12 +83,12 @@
 	</target>
 
 	<target name="compile" depends="copyjars" description="Compiles Java and Scala source and copies other source files to the war">
-		<mkdir dir="${classes.dir}" />
-		<copy todir="${classes.dir}">
+		<mkdir dir="${build.classes.dir}" />
+		<copy todir="${build.classes.dir}">
 			<fileset dir="${resources.src}" />
 		</copy>
-		<javac srcdir="${java.src}" destdir="${classes.dir}" classpathref="project.classpath" target="1.5" />
-		<fsc srcdir="${scala.src}" destdir="${classes.dir}" classpathref="project.classpath" force="changed" />
+		<javac srcdir="${java.src}" destdir="${build.classes.dir}" classpathref="project.classpath" target="1.5" />
+		<fsc srcdir="${scala.src}" destdir="${build.classes.dir}" classpathref="project.classpath" force="changed" />
 	</target>
 
 	<target name="test-compile" depends="compile" description="Compiles Java and Scala tests">
