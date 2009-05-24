@@ -24,18 +24,32 @@ SPECS = 'org.scala-tools.testing:specs:jar:1.5.0'
 
 desc 'NY Whiskey Directory'
 define 'whiskey-directory' do
+	# Project config
 	gaelibs = FileList[_(ENV['HOME'],'Documents/src/gae','appengine-java-sdk-1.2.1','lib/shared','**/*.jar')]
 	DEPS = [JETTY, SCALA] << gaelibs
 	TEST_DEPS = [SPECS]
-
+	# Build config
+	webapp = _('src/main/webapp/*')
+	resources = _('target/resources/*')
+	src = _('target/classes/*')
+	war = _('target/war')
+	classes = _(war, 'WEB-INF/classes')
+	# Buildr properties
 	project.group = 'com.whiskeydirectory'
 	project.version = VERSION_NUMBER
 	manifest['Copyright'] = 'Bryan J Swift (C) 2009'
-	scala = _('src/main/scala')
 	compile.using(:warnings => 'true').with DEPS
 	test.with DEPS, TEST_DEPS
 	test.using :specs
 	package :war, :id => 'whiskey-directory'
+
+	task('exploded'=>[build]) do |task|
+		mkpath war
+		# copy src/main/webapp/* to target/war/
+		# copy target/classes/* to target/war/WEB-INF/classes/
+		# copy target/resources/* to target/war/WEB-INF/classes/
+		# copy {classpath} to target/war/WEB-INF/lib/
+	end
 
 	task 'package' do |task|
 		# After packaging explode the war if you can figure out how
