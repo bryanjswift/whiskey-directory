@@ -27,22 +27,36 @@ desc 'NY Whiskey Directory'
 define 'whiskey-directory' do
 	# Project config
 	gaelibs = FileList[_(ENV['HOME'],'Documents/src/gae','appengine-java-sdk-1.2.1','lib/shared','**/*.jar')]
-	DEPS = [JETTY, SCALA] << gaelibs
-	TEST_DEPS = [SPECS]
+	DEPS = [] << gaelibs
+	TEST_DEPS = [SPECS] << DEPS
 	# Build config
 	webapp = _('src/main/webapp/*')
 	resources = _('target/resources/*')
 	src = _('target/classes/*')
 	war = _('target/war')
-	classes = _(war, 'WEB-INF/classes')
+	warclasses = _(war, 'WEB-INF/classes')
+	warlib = _(war, 'WEB-INF/lib')
+	
 	# Buildr properties
 	project.group = 'com.whiskeydirectory'
 	project.version = VERSION_NUMBER
 	manifest['Copyright'] = 'Bryan J Swift (C) 2009'
 	compile.using(:warnings => 'true').with DEPS
-	test.with DEPS, TEST_DEPS
+	test.with TEST_DEPS
 	test.using :specs
 	package :war, :id => 'whiskey-directory'
+
+	task :explode => [package] do
+		mkpath warlib
+		packages.detect { |pkg| pkg.to_s =~ /war$/ }.tap do |war|
+			war.classes.each do |clazz|
+				filter.from(clazz).into(warclasses).run
+			end
+			war.libs.each do |lib|
+				cp lib.to_s, warlib
+			end
+		end
+	end
 
 	task('exploded'=>[build]) do |task|
 		mkpath war
