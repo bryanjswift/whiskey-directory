@@ -48,6 +48,7 @@ define 'whiskey-directory' do
 
 	task :explode => [package] do
 		mkpath warlib
+		sh 'cp -R ' + webapp + ' ' + war
 		packages.detect { |pkg| pkg.to_s =~ /war$/ }.tap do |war|
 			war.classes.each do |clazz|
 				filter.from(clazz).into(warclasses).run
