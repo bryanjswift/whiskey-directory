@@ -34,4 +34,9 @@ define 'whiskey-directory' do
 	test.with DEPS, TEST_DEPS
 	test.using :specs
 	package :war, :id => 'whiskey-directory'
+	
+	build do
+		puts 'Building war directory'
+		mkpath 'target/war/WEB-INF/lib'
+	end
 end
