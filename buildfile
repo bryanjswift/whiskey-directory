@@ -22,6 +22,7 @@ SCALA = group('scala-library','scala-compiler',:under => 'org.scala-lang', :vers
 SPECS = 'org.scala-tools.testing:specs:jar:1.5.0'
 # Set to use Java 1.5 because Java 6 (1.6) is not working
 ENV['JAVA_HOME'] = '/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home'
+ENV['USE_FSC'] = 'yes'
 
 desc 'NY Whiskey Directory'
 define 'whiskey-directory' do
