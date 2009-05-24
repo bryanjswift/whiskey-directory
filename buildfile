@@ -20,7 +20,8 @@ JETTY = ['org.mortbay.jetty:jetty-util:jar:7.0.0.pre5','org.mortbay.jetty:jetty:
 SCALA = group('scala-library','scala-compiler',:under => 'org.scala-lang', :version => '2.7.4')
 # Testing Dependencies
 SPECS = 'org.scala-tools.testing:specs:jar:1.5.0'
-
+# Set to use Java 1.5 because Java 6 (1.6) is not working
+ENV['JAVA_HOME'] = '/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home'
 
 desc 'NY Whiskey Directory'
 define 'whiskey-directory' do
