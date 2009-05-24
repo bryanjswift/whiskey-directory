@@ -19,6 +19,10 @@ JETTY = [
 	'org.mortbay.jetty:servlet-api:jar:3.0.pre4'
 ]
 SCALA = group('scala-library','scala-compiler',:under=>'org.scala-lang', :version=>'2.7.4')
+DEPS = [JETTY, SCALA]
+
+SPECS = 'org.scala-tools.testing:specs:jar:1.5.0'
+TEST_DEPS = [SPECS]
 
 desc 'NY Whiskey Directory'
 define 'whiskey-directory' do
@@ -26,8 +30,8 @@ define 'whiskey-directory' do
 	project.version = VERSION_NUMBER
 	manifest['Copyright'] = 'Bryan J Swift (C) 2009'
 	scala = _('src/main/scala')
-	compile.with MYSQL, JETTY, SCALA
-	test.with 'org.scala-tools.testing:specs:jar:1.5.0'
+	compile.into('target/war/WEB-INF/classes').using(:warnings=>'true').with DEPS
+	test.with DEPS, TEST_DEPS
 	test.using :specs
 	package :war, :id => 'whiskey-directory'
 end
