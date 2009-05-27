@@ -13,11 +13,8 @@ repositories.remote << 'http://google-maven-repository.googlecode.com/svn/snapsh
 # Constants
 VERSION_NUMBER = '1.0'
 # Dependencies
-MYSQL = 'mysql:mysql-connector-java:jar:5.1.5'
-JETTY = ['org.mortbay.jetty:jetty-util:jar:7.0.0.pre5','org.mortbay.jetty:jetty:jar:7.0.0.pre5',
-	'org.mortbay.jetty:servlet-api:jar:3.0.pre4'
-]
-SCALA = group('scala-library','scala-compiler',:under => 'org.scala-lang', :version => '2.7.4')
+# Scala Jars should be included from SCALA_HOME environment variable (or macports install)
+	#SCALA = group('scala-library','scala-compiler',:under => 'org.scala-lang', :version => '2.7.4')
 # Testing Dependencies
 SPECS = 'org.scala-tools.testing:specs:jar:1.5.0'
 # Set to use Java 1.5 because Java 6 (1.6) is not working
