@@ -12,8 +12,8 @@ object StreetSpecs extends Specification {
 			val street = new NorthSouthStreet(null)
 			false // exception should be thrown
 		} catch {
-			case iae:IllegalArgumentException =>
-				true // expected
+			case e:Exception =>
+				e must haveClass[IllegalArgumentException]
 		}
 	}
 	"empty Street name should throw exception" in {
@@ -21,14 +21,14 @@ object StreetSpecs extends Specification {
 			val street = new EastWestStreet("")
 			false // exception should be thrown
 		} catch {
-			case iae:IllegalArgumentException =>
-				true // expected
+			case e:Exception =>
+				e must haveClass[IllegalArgumentException]
 		}
 	}
 	"NorthSouthStreet('6th Ave')" should have {
 		val street = new NorthSouthStreet("6th Ave")
-		"values of List(NULL,'6th Ave','1','0')" in {
-			street.values == List("NULL","'6th Ave'","'1'","'0'")
+		"values of List('6th Ave','1','0')" in {
+			street.values must_== List("'6th Ave'","'1'","'0'")
 		}
 	}
 }

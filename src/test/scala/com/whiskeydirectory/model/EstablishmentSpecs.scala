@@ -11,8 +11,8 @@ object EstablishmentSpecs extends Specification {
 			val establishment = new Establishment(null, None, None)
 			false // exception should be thrown
 		} catch {
-			case iae:IllegalArgumentException =>
-				true // expected
+			case e:Exception =>
+				e must haveClass[IllegalArgumentException]
 		}
 	}
 	"empty Establishment name should throw exception" in {
@@ -20,8 +20,8 @@ object EstablishmentSpecs extends Specification {
 			val establishment = new Establishment("", None, None)
 			false // exception should be thrown
 		} catch {
-			case iae:IllegalArgumentException =>
-				true // expected
+			case e:Exception =>
+				e must haveClass[IllegalArgumentException]
 		}
 	}
 }

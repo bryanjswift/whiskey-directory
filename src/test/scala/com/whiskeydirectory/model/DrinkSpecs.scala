@@ -11,8 +11,8 @@ object DrinkSpecs extends Specification {
 			val drink = new Drink(null)
 			false // exception should be thrown
 		} catch {
-			case iae:IllegalArgumentException =>
-				true // expected
+			case e:Exception =>
+				e must haveClass[IllegalArgumentException]
 		}
 	}
 	"empty Drink name should throw exception" in {
@@ -20,8 +20,8 @@ object DrinkSpecs extends Specification {
 			val drink = new Drink("")
 			false // exception should be thrown
 		} catch {
-			case iae:IllegalArgumentException =>
-				true // expected
+			case e:Exception =>
+				e must haveClass[IllegalArgumentException]
 		}
 	}
 }
