@@ -24,8 +24,10 @@ ENV['USE_FSC'] = 'yes'
 desc 'NY Whiskey Directory'
 define 'whiskey-directory' do
 	# Project config
-	gaelibs = FileList[_(ENV['HOME'],'Documents/src/gae','appengine-java-sdk-1.2.1','lib/shared','**/*.jar')]
-	DEPS = [] << gaelibs
+	gaelibshared = FileList[_(ENV['HOME'],'Documents/src/gae','appengine-java-sdk-1.2.1','lib/shared','**/*.jar')]
+	gaelibuser = FileList[_(ENV['HOME'],'Documents/src/gae','appengine-java-sdk-1.2.1','lib/user','**/*.jar')]
+	DEPS = [] << gaelibuser
+	CLASSPATH = DEPS + gaelibshared
 	TEST_DEPS = [SPECS] << DEPS
 	# Build config
 	webapp = _('src/main/webapp/*')
@@ -39,10 +41,10 @@ define 'whiskey-directory' do
 	project.group = 'com.whiskeydirectory'
 	project.version = VERSION_NUMBER
 	manifest['Copyright'] = 'Bryan J Swift (C) 2009'
-	compile.using(:warnings => 'true').with DEPS
+	compile.using(:warnings => 'true').with DEPS, CLASSPATH
 	test.with TEST_DEPS
 	test.using :specs
-	package :war, :id => 'whiskey-directory'
+	package(:war, :id => 'whiskey-directory').with DEPS
 
 	task :explode => [package] do
 		mkpath warlib
@@ -51,8 +53,11 @@ define 'whiskey-directory' do
 			war.classes.each do |clazz|
 				filter.from(clazz).into(warclasses).run
 			end
+			flattenedDeps = DEPS.flatten
 			war.libs.each do |lib|
-				cp lib.to_s, warlib
+				if flattenedDeps.include? lib.to_s then
+					cp lib.to_s, warlib
+				end
 			end
 		end
 	end
