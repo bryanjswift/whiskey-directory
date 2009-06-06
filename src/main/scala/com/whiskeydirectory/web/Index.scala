@@ -1,6 +1,7 @@
 package com.whiskeydirectory.web
 
 import com.whiskeydirectory.model.{Street, NorthSouthStreet, EastWestStreet}
+import com.whiskeydirectory.persistence.datastore.{DatastorePersister}
 import javax.servlet.http.{HttpServlet, HttpServletRequest => Request, HttpServletResponse => Response}
 
 class Index extends HttpServlet {
@@ -11,6 +12,7 @@ class Index extends HttpServlet {
 		val name = request.getParameterValues("name")(0)
 		val northVals = request.getParameterValues("longitudinal")
 		val street:Street = if (northVals != null && northVals(0) == "true") new NorthSouthStreet(name) else new EastWestStreet(name)
+		DatastorePersister save street
 		response.sendRedirect("/index.jsp")
 	}
 }

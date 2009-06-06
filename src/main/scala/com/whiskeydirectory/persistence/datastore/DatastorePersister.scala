@@ -7,7 +7,7 @@ import java.io.Serializable
 object DatastorePersister extends Persister {
 	val datastore = DatastoreServiceFactory.getDatastoreService()
 	def save(obj:Savable):Serializable = {
-		val entity = new Entity(obj.table,obj.table + "_id")
+		val entity = new Entity(obj.table,obj.table)
 		val map = obj.fields zip obj.values
 		map.foreach(t => {
 			entity.setProperty(t._1,t._2)
