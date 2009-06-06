@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bryanjswift.persistance.annotations;
+package com.bryanjswift.persistence.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
