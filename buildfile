@@ -14,12 +14,11 @@ repositories.remote << 'http://google-maven-repository.googlecode.com/svn/snapsh
 VERSION_NUMBER = '1.0'
 # Dependencies
 # Scala Jars should be included from SCALA_HOME environment variable (or macports install)
-SCALA = group('scala-library','scala-compiler',:under => 'org.scala-lang', :version => '2.7.4')
+SCALA = group('scala-library','scala-compiler',:under => 'org.scala-lang', :version => '2.7.5')
 # Testing Dependencies
 SPECS = 'org.scala-tools.testing:specs:jar:1.5.0'
 # Set to use Java 1.5 because Java 6 (1.6) is not working
 ENV['JAVA_HOME'] = '/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home'
-ENV['USE_FSC'] = 'yes'
 
 desc 'NY Whiskey Directory'
 define 'whiskey-directory' do
