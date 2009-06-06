@@ -6,6 +6,7 @@ sealed abstract class Street(val name:String) extends Savable {
 	require(name != null && name != "")
 	def longitudinal:Boolean
 	def latitudinal:Boolean
+	override val id = name.hashCode.toLong
 	override val table = "`whiskeydirectory`.`street`"
 	override val fields = List("name","longitudinal","latitudinal")
 	override def values:List[String] =
