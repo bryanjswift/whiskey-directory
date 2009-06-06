@@ -14,7 +14,7 @@ repositories.remote << 'http://google-maven-repository.googlecode.com/svn/snapsh
 VERSION_NUMBER = '1.0'
 # Dependencies
 # Scala Jars should be included from SCALA_HOME environment variable (or macports install)
-	#SCALA = group('scala-library','scala-compiler',:under => 'org.scala-lang', :version => '2.7.4')
+SCALA = group('scala-library','scala-compiler',:under => 'org.scala-lang', :version => '2.7.4')
 # Testing Dependencies
 SPECS = 'org.scala-tools.testing:specs:jar:1.5.0'
 # Set to use Java 1.5 because Java 6 (1.6) is not working
@@ -26,7 +26,7 @@ define 'whiskey-directory' do
 	# Project config
 	gaelibshared = FileList[_(ENV['HOME'],'Documents/src/gae','appengine-java-sdk-1.2.1','lib/shared','**/*.jar')]
 	gaelibuser = FileList[_(ENV['HOME'],'Documents/src/gae','appengine-java-sdk-1.2.1','lib/user','**/*.jar')]
-	DEPS = [] << gaelibuser
+	DEPS = [SCALA] << gaelibuser
 	CLASSPATH = DEPS + gaelibshared
 	TEST_DEPS = [SPECS] << DEPS
 	# Build config
@@ -55,8 +55,10 @@ define 'whiskey-directory' do
 			end
 			flattenedDeps = DEPS.flatten
 			war.libs.each do |lib|
-				if flattenedDeps.include? lib.to_s then
-					cp lib.to_s, warlib
+				flattenedDeps.each do |dep|
+					if (dep.to_s == lib.to_s) then
+						cp lib.to_s, warlib
+					end
 				end
 			end
 		end
