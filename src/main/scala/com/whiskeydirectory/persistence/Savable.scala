@@ -2,7 +2,7 @@ package com.whiskeydirectory.persistence
 
 // these methods could probably be implemented using reflection
 trait Savable {
-	var id:Long = _
+	def id:Long
 	val table:String
 	val fields:List[String]
 	/* I want this function to be able to derive what fields should be included here */
