@@ -1,18 +1,17 @@
 package com.whiskeydirectory.model
 
-import com.bryanjswift.persistence.annotations.{Entity,Persist}
+import com.bryanjswift.persistence.annotations.{Entity,Persistent}
 import com.whiskeydirectory.persistence.Savable
 
 @Entity{val name="Street"}
-sealed abstract class Street(@Persist val name:String) extends Savable {
+sealed abstract class Street(@Persistent val name:String) extends Savable {
 	require(name != null && name != "")
-	@Persist
+	@Persistent
 	def longitudinal:Boolean
-	@Persist
+	@Persistent
 	def latitudinal:Boolean
-	@Persist
+	@Persistent
 	override val id = name.hashCode.toLong
-	override val table = "`whiskeydirectory`.`street`"
 	override val fields = List("name","longitudinal","latitudinal")
 	override def values:List[String] =
 		List(name.mkString("'","","'"),binary(longitudinal),binary(latitudinal))
