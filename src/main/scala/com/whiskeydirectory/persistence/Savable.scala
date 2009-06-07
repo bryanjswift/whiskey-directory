@@ -4,14 +4,14 @@ import com.bryanjswift.persistence.annotations.{Entity,Persistent}
 
 trait Savable {
 	def id:Long
-	def table:String = getEntityName(this.getClass())
-	def fields:List[String] = {
+	lazy val table:String = getEntityName(this.getClass())
+	lazy val fields:List[String] = {
 		for {
 			method <- getMethods(this.getClass())
 			if method.getAnnotation(classOf[Persistent]) != null
 		} yield method.getName()
 	}
-	def values:List[Any] = {
+	lazy val values:List[Any] = {
 		val c = this.getClass()
 		for {
 			field <- fields
