@@ -1,14 +1,28 @@
 package com.whiskeydirectory.persistence
 
-import com.bryanjswift.persistence.annotations.{Entity}
+import com.bryanjswift.persistence.annotations.{Entity,Persistent}
 
-// these methods could probably be implemented using reflection
 trait Savable {
 	def id:Long
 	def table:String = getEntityName(this.getClass())
-	val fields:List[String]
-	/* I want this function to be able to derive what fields should be included here */
-	def values:List[String]
+	def fields:List[String] = {
+		for {
+			method <- getMethods(this.getClass())
+			if method.getAnnotation(classOf[Persistent]) != null
+		} yield method.getName()
+	}
+	def values:List[Any] = {
+		val c = this.getClass()
+		for {
+			field <- fields
+		} yield c.getDeclaredMethod(field).invoke(this)
+	}
+	private def getMethods(c:Class[_]):List[java.lang.reflect.Method] = {
+		if (c.getSuperclass() != null)
+			getMethods(c.getSuperclass()) ::: c.getDeclaredMethods().toList
+		else
+			c.getDeclaredMethods().toList
+	}
 	private def getEntityName(c:Class[_]):String = {
 		val entity = c.getAnnotation(classOf[Entity])
 		if (entity == null && c.getSuperclass() != null)
@@ -18,5 +32,4 @@ trait Savable {
 		else
 			entity.name()
 	}
-	def binary(b:Boolean):String = if (b) "'1'" else "'0'"
 }

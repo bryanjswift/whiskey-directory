@@ -27,8 +27,8 @@ object StreetSpecs extends Specification {
 	}
 	"NorthSouthStreet('6th Ave')" should have {
 		val street = new NorthSouthStreet("6th Ave")
-		"values of List('6th Ave','1','0')" in {
-			street.values must_== List("'6th Ave'","'1'","'0'")
+		"values of List(6th Ave,true,false)" in {
+			street.values must containAll(List("6th Ave",true,false))
 		}
 	}
 }

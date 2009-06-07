@@ -10,11 +10,7 @@ sealed abstract class Street(@Persistent val name:String) extends Savable {
 	def longitudinal:Boolean
 	@Persistent
 	def latitudinal:Boolean
-	@Persistent
 	override val id = name.hashCode.toLong
-	override val fields = List("name","longitudinal","latitudinal")
-	override def values:List[String] =
-		List(name.mkString("'","","'"),binary(longitudinal),binary(latitudinal))
 }
 
 case class NorthSouthStreet(override val name:String) extends Street(name) {
