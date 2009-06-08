@@ -1,6 +1,6 @@
 package com.whiskeydirectory.persistence
 
-import com.bryanjswift.persistence.annotations.{Entity,Persistent}
+import com.bryanjswift.persistence.annotations.{Entity,Persistent,PersistentEntity}
 
 trait Savable {
 	def id:Long
@@ -17,11 +17,11 @@ trait Savable {
 			field <- fields
 		} yield c.getDeclaredMethod(field).invoke(this)
 	}
-	private def getMethods(c:Class[_]):List[java.lang.reflect.Method] = {
-		if (c.getSuperclass() != null)
-			getMethods(c.getSuperclass()) ::: c.getDeclaredMethods().toList
-		else
-			c.getDeclaredMethods().toList
+	lazy val entities:List[Savable] = {
+		for {
+			method <- getMethods(this.getClass())
+			if (method.getAnnotation(classOf[PersistentEntity]) != null)
+		} yield method.invoke(this).asInstanceOf[Savable]
 	}
 	private def getEntityName(c:Class[_]):String = {
 		val entity = c.getAnnotation(classOf[Entity])
@@ -31,5 +31,11 @@ trait Savable {
 			"Default"
 		else
 			entity.name()
+	}
+	private def getMethods(c:Class[_]):List[java.lang.reflect.Method] = {
+		if (c.getSuperclass() != null)
+			getMethods(c.getSuperclass()) ::: c.getDeclaredMethods().toList
+		else
+			c.getDeclaredMethods().toList
 	}
 }
