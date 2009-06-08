@@ -1,11 +1,19 @@
 package com.whiskeydirectory.model
 
+import com.bryanjswift.persistence.annotations.{Entity,Persistent,PersistentEntity}
 import com.whiskeydirectory.persistence.Savable
 
-class Drink(val name:String, val tags:Option[List[String]], val establishment:Option[Establishment]) {
+class Drink(
+	@Persistent val name:String,
+	@Persistent val tags:Option[List[String]],
+	@PersistentEntity val establishment:Option[Establishment])
+		extends Savable {
+
 	require(name != null && name.length > 0)
 	def this(name:String) = this(name, None, None)
 	def this(name:String, tags:List[String]) = this(name, Some(tags), None)
+
+	var id:Long = _
 }
 
 object Drink {
