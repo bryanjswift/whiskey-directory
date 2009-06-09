@@ -6,7 +6,7 @@ import com.whiskeydirectory.persistence.Savable
 abstract class Location
 
 @Entity{val name = "CrossStreet"}
-case class CrossStreet(@Persistent val streets:List[Street]) extends Savable {
+case class CrossStreet(@PersistentEntity val streets:List[Street]) extends Savable {
 	var id:Long = _
 	val streetsLength = streets.length
 	require(streetsLength == 2 || streetsLength == 3)
