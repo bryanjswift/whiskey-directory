@@ -3,6 +3,7 @@ package com.whiskeydirectory.model
 import com.bryanjswift.persistence.annotations.{Entity,Persistent,PersistentEntity}
 import com.whiskeydirectory.persistence.Savable
 
+@Entity{val name = "Drink"}
 class Drink(
 	@Persistent val name:String,
 	@Persistent val tags:Option[List[String]],

@@ -1,8 +1,13 @@
 package com.whiskeydirectory.model
 
+import com.bryanjswift.persistence.annotations.{Entity,Persistent,PersistentEntity}
+import com.whiskeydirectory.persistence.Savable
+
 abstract class Location
 
-case class CrossStreet(val streets:List[Street]) {
+@Entity{val name = "CrossStreet"}
+case class CrossStreet(@Persistent val streets:List[Street]) extends Savable {
+	var id:Long = _
 	val streetsLength = streets.length
 	require(streetsLength == 2 || streetsLength == 3)
 	require(streets.filter(street => street.longitudinal).length >= 1)
