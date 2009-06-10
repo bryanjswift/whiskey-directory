@@ -8,7 +8,7 @@ sealed abstract class Street(@Persistent val name:String) extends Savable {
 	require(name != null && name != "")
 	@Persistent def longitudinal:Boolean
 	@Persistent def latitudinal:Boolean
-	override val id = name.hashCode.toLong
+	val id = name.hashCode.toLong
 }
 
 case class NorthSouthStreet(override val name:String) extends Street(name) {
